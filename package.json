@@ -1,0 +1,33 @@
+{
+  "name": "block_chain_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "JOB_TYPES=user nodemon index.js",
+    "start-pm2": "JOB_TYPES=user pm2 start index.js",
+    "start": "pm2 start index.js -i 0 --name BlockChain-Api",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@project-serum/anchor": "^0.26.0",
+    "@solana/web3.js": "^1.95.2",
+    "agenda": "^5.0.0",
+    "axios": "^1.7.3",
+    "bs58": "^6.0.0",
+    "child_process": "^1.0.2",
+    "cross-fetch": "^4.0.0",
+    "express": "^4.16.4",
+    "form-data": "^2.3.3",
+    "joi": "^17.13.3",
+    "kafka-node": "^5.0.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "mongoose": "^5.13.22",
+    "nodemon": "^3.1.4",
+    "querystring": "^0.2.0",
+    "sprintf-js": "^1.1.2"
+  }
+}
