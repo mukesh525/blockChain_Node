@@ -6,7 +6,15 @@ require("./startup/routes")(app);
 require("./startup/db")();
 
 async function graceful() {
-  await agenda.stop();
+  try {
+    await agenda.stop(); // Ensure Agenda stops processing jobs
+    console.log("Agenda stopped gracefully.");
+    // Clear all jobs from the database
+    await agenda.cancel({}); // Clear all jobs (you can customize the query to be more specific)
+    console.log("All jobs cleared from Agenda.");
+  } catch (error) {
+    console.error("Error stopping Agenda:", error);
+  }
   process.exit(0);
 }
 
