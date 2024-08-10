@@ -1,4 +1,6 @@
-const Joi = require("joi");
+const BaseJoi = require("joi");
+const Extension = require("joi-date-extensions");
+const Joi = BaseJoi.extend(Extension);
 
 const mongoose = require("mongoose");
 const kafkaProducer = require("../lib/kafka/producer");
@@ -23,7 +25,7 @@ const TokensSchema = new mongoose.Schema(
 
 // Post-save middleware to log new documents
 TokensSchema.post("save", function (doc) {
-  kafkaProducer.sendMessage("test-topic", "Server started!");
+  kafkaProducer.sendMessage("test-topic", { tokenAddress: doc.tokenAddress });
   console.log(`New document saved: ${JSON.stringify(doc)}`);
 });
 
@@ -34,7 +36,7 @@ function validateToken(token) {
     tokenName: Joi.string().min(1).max(50000).required(),
     tokenAddress: Joi.string().min(1).max(50000).required(),
   };
-  return Joi.validate(user, schema, { allowUnknown: true });
+  return Joi.validate(token, schema, { allowUnknown: true });
 }
 
 exports.Token = Tokens;

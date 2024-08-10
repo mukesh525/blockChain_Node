@@ -1,15 +1,18 @@
 const _ = require("lodash");
 const express = require("express");
 const router = express.Router();
-const { Token } = require("../models/token");
+const { Token, validate } = require("../models/token");
 const kafkaProducer = require("../lib/kafka/producer");
 const tokenRepository = require("../repositories/tokenRepository");
 
-router.get("/", async (req, res) => {
-  const tokenData = {
-    tokenName: "Example Token",
-    tokenAddress: "0x1234567890abcdef",
-  };
+router.post("/", async (req, res) => {
+  const { error } = validate(req.body);
+  if (error)
+    return res
+      .status(400)
+      .send({ message: error.details[0].message.replace(/['"]+/g, "") });
+
+  const tokenData = req.body;
   try {
     const newToken = await tokenRepository.createToken(tokenData);
     console.log("Token created:", newToken);
