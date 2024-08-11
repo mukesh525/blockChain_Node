@@ -39,7 +39,7 @@ async function getAccountInfo() {
   console.log(accountInfo);
 }
 
-//getAccountInfo().catch(console.error);
+getAccountInfo().catch(console.error);
 
 // Swapping SOL to USDC with input 0.1 SOL and 0.5% slippage
 async function GetQuote(tokenBuyAddress, tokenSellAddress) {
@@ -50,14 +50,7 @@ async function GetQuote(tokenBuyAddress, tokenSellAddress) {
     const response = await fetch(url);
     const quote = await response.json();
     console.log("GetQuote Response:", quote);
-    if (quote && quote.outAmount) {
-      const outputAmount = parseFloat(quote.outAmount); // Convert to a number if needed
-      console.log(`Output amount: ${outputAmount}`);
-      // You can use outputAmount in further calculations
-      return outputAmount;
-    } else {
-      throw new Error("Invalid quote response structure.");
-    }
+    return quote;
   } catch (error) {
     console.error("Error fetching quote:", error);
     throw error; // Optionally handle or rethrow the error

@@ -25,7 +25,10 @@ const TokensSchema = new mongoose.Schema(
 
 // Post-save middleware to log new documents
 TokensSchema.post("save", function (doc) {
-  kafkaProducer.sendMessage("test-topic", { tokenAddress: doc.tokenAddress });
+  kafkaProducer.sendMessage(
+    "test-topic",
+    JSON.stringify({ tokenAddress: doc.tokenAddress })
+  );
   console.log(`New document saved: ${JSON.stringify(doc)}`);
 });
 

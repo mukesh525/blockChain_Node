@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
 
 router.post("/BuyOrSell", async (req, res) => {
   try {
-    console.log(req.body);
+    //console.log(req.body);
     let { tokenAddress, solanAddress } = req.body;
     const data = await BuyOrSell(tokenAddress, solanAddress);
     console.log("BuyOrSell data:", data);
