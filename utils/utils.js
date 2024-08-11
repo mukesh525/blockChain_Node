@@ -1,5 +1,5 @@
 const transactionRepository = require("../repositories/transactionRepository");
-const { BuyOrSell } = require("./price");
+const { BuyOrSell, GetQuote } = require("./price");
 const { createWatchTokens } = require("../repositories/WatchtokenRepository");
 
 processTransaction = async (job, done) => {
@@ -7,7 +7,8 @@ processTransaction = async (job, done) => {
   console.log("ProcessTransaction", allTransactions);
   // Example: Iterate over each transaction to check conditions
   for (const transaction of allTransactions) {
-    let currentPrice = await getCurrentPrice(transaction.tokenAddress); // Get the current price of the token
+    let currentPrice = await getCurrentPrice(transaction.tokenAddress);
+    // let currentPrice = await GetQuote(transaction.tokenAddress); // Get the current price of the token
     let buyPrice = transaction.tokenBuyPrice;
 
     // Check condition 1
@@ -86,6 +87,7 @@ condition3 = (transaction, currentPrice) => {
 const getCurrentPrice = async (tokenAddress) => {
   // Replace this with actual API call to fetch the current price
   return 20; // Dummy value
+  return GetQuote(tokenAddress);
 };
 
 getTokenBalanceWeb3 = async (connection, tokenAccount) => {
