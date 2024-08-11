@@ -43,14 +43,22 @@ async function getAccountInfo() {
 
 // Swapping SOL to USDC with input 0.1 SOL and 0.5% slippage
 async function GetQuote(tokenBuyAddress, tokenSellAddress) {
-  const url = `https://quote-api.jup.ag/v6/quote?inputMint=${tokenSellAddress}\
-              &outputMint=${tokenBuyAddress}\
-              &amount=100000000\
-              &slippageBps=50`;
+  const url = `https://quote-api.jup.ag/v6/quote?inputMint=${tokenSellAddress}&outputMint=${tokenBuyAddress}&amount=100000000&slippageBps=50`;
 
   try {
+    //console.log(`Fetching URL: ${url}`);
     const response = await fetch(url);
-    const quoteResponse = await response.json();
+    const quote = await response.json();
+    console.log("GetQuote Response:", quote);
+    if (quote && quote.outAmount) {
+      const outputAmount = parseFloat(quote.outAmount); // Convert to a number if needed
+      console.log(`Output amount: ${outputAmount}`);
+      // You can use outputAmount in further calculations
+      return outputAmount;
+    } else {
+      throw new Error("Invalid quote response structure.");
+    }
+
     return quoteResponse;
   } catch (error) {
     console.error("Error fetching quote:", error);
