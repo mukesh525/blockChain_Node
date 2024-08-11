@@ -58,8 +58,6 @@ async function GetQuote(tokenBuyAddress, tokenSellAddress) {
     } else {
       throw new Error("Invalid quote response structure.");
     }
-
-    return quoteResponse;
   } catch (error) {
     console.error("Error fetching quote:", error);
     throw error; // Optionally handle or rethrow the error
