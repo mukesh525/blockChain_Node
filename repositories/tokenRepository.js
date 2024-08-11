@@ -29,7 +29,22 @@ async function findTokenByAddress(tokenAddress) {
   }
 }
 
+/**
+ * Get all Token.
+ * @param {string} tokenAddress - The address of the token to find.
+ * @returns {Promise<Object|null>} - The found token document or null if not found.
+ */
+async function findAllToken() {
+  try {
+    return await Token.find({});
+  } catch (error) {
+    console.error("Error finding token:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   createToken,
   findTokenByAddress,
+  findAllToken,
 };
