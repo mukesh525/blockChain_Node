@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const agenda = require("./lib/agenda");
 
+const Consumer = require("./lib/kafka/consumer");
 require("./startup/routes")(app);
 require("./startup/db")();
 
@@ -15,6 +16,12 @@ async function graceful() {
   } catch (error) {
     console.error("Error stopping Agenda:", error);
   }
+
+  // Close the Kafka consumer
+  Consumer.close(true, () => {
+    console.log("Kafka Consumer closed.");
+    process.exit(0);
+  });
   process.exit(0);
 }
 

@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
   try {
     const newToken = await tokenRepository.createToken(tokenData);
     console.log("Token created:", newToken);
+    return res.status(200).send(newToken);
   } catch (error) {
     console.error("Failed to create token:", error);
     return res.status(400).send({ message: error });
